@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<fsaConfiguration>
+	<configuration>
+		<emailSummary enabled="true">
+			<smtpServer>a.b.c.d</smtpServer>
+			<fromAddress>a@a.com</fromAddress>
+		</emailSummary>
+	</configuration>
+	<fileStore>
+		<method>copy</method>
+		<soureDirectory>c:\temp\src</soureDirectory>
+		<destinationDirectory>c:\temp\dest</destinationDirectory>
+		<recursive />
+	</fileStore>
+</fsaConfiguration>
