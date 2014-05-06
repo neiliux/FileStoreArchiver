@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebugAssertMockedTestClass.cs" />
+    <Compile Include="DebugAssertMockedTestFixture.cs" />
     <Compile Include="DebugListenerHelpers.cs" />
     <Compile Include="FailTestOnDebugAssetFailure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,6 +2,9 @@
 
 namespace FSA.BL.Tests.Unit
 {
+	/// <summary>
+	/// Container for various FSA configuration blocks.
+	/// </summary>
 	public static class ConfigurationSamples
 	{
 		public static XDocument CreateMinimumValidConfiguration()
@@ -66,7 +69,7 @@ namespace FSA.BL.Tests.Unit
 		{
 			return new XDocument(new XElement("fsaConfiguration",
 											new XElement("fileStore",
-												new XElement("methodInvalif", "copy"),
+												new XElement("methodInvalid", "copy"),
 												new XElement("sourceDirectory", @"c:\temp"),
 												new XElement("destinationDirectory", @"c:\temp"))));
 		}

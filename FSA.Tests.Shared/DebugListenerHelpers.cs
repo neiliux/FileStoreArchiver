@@ -11,9 +11,9 @@ namespace FSA.Tests.Shared
 		/// <summary>
 		/// Registers a listener.
 		/// </summary>
-		/// <param name="listener">The listener.</param>
-		/// <param name="removeDefault">if set to <c>true</c> [remove default].</param>
-		/// <param name="removeAllListeners">if set to <c>true</c> [remove all listeners].</param>
+		/// <param name="listener">The listener to register.</param>
+		/// <param name="removeDefault">if set to <c>true</c> the default listener is removed.</param>
+		/// <param name="removeAllListeners">if set to <c>true</c> all registered listener's are removed before the passed listener is registered.</param>
 		/// <remarks></remarks>
 		public static void RegisterListener(TraceListener listener, bool removeDefault = true, bool removeAllListeners = false)
 		{

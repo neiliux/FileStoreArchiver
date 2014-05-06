@@ -8,13 +8,13 @@ using FSA.Interfaces;
 namespace FSA.BL
 {
 	/// <summary>
-	/// Manages FSA configuration
+	/// Manages FSA configuration.
 	/// </summary>
 	/// <remarks></remarks>
 	public class FsaConfigurationManager : IFsaConfigurationManager
 	{
 		/// <summary>
-		/// Configuration data provider
+		/// Configuration data provider.
 		/// </summary>
 		private readonly IFsaConfigurationDataProvider _dataProvider;
 
@@ -40,7 +40,7 @@ namespace FSA.BL
 #endif
 
 		/// <summary>
-		/// Retrieves the FSA configuration
+		/// Retrieves the FSA configuration.
 		/// </summary>
 		/// <param name="options">The options.</param>
 		/// <returns></returns>
@@ -75,12 +75,13 @@ namespace FSA.BL
 			XElement emailSummaryNode = configurationNode.Element("emailSummary");
 			Debug.Assert(emailSummaryNode != null);
 
-			EmailSummaryDetails emailSummaryDetails = new EmailSummaryDetails
-			{
-				Enabled = (bool)emailSummaryNode.Attribute("enabled"),
-				FromAddress = (string)emailSummaryNode.Element("fromAddress"),
-				SmtpServer = (string)emailSummaryNode.Element("smtpServer")
-			};
+			EmailSummaryDetails emailSummaryDetails 
+				= new EmailSummaryDetails
+				{
+					Enabled = (bool)emailSummaryNode.Attribute("enabled"),
+					FromAddress = (string)emailSummaryNode.Element("fromAddress"),
+					SmtpServer = (string)emailSummaryNode.Element("smtpServer")
+				};
 
 			return emailSummaryDetails;
 		}
@@ -138,13 +139,14 @@ namespace FSA.BL
 		/// <remarks></remarks>
 		private static FileStoreDetails CreateFileStoreDetails(XElement fileStoreNode)
 		{
-			FileStoreDetails fileStoreDetails = new FileStoreDetails
-			{
-				Method = GetFileStoreMethod(fileStoreNode),
-				SourceDirectory = (string)fileStoreNode.Element("sourceDirectory"),
-				DestinationDirectory = (string)fileStoreNode.Element("destinationDirectory"),
-				ConfigurationSection = BuildConfigurationSection(fileStoreNode)
-			};
+			FileStoreDetails fileStoreDetails 
+				= new FileStoreDetails
+				{
+					Method = GetFileStoreMethod(fileStoreNode),
+					SourceDirectory = (string)fileStoreNode.Element("sourceDirectory"),
+					DestinationDirectory = (string)fileStoreNode.Element("destinationDirectory"),
+					ConfigurationSection = BuildConfigurationSection(fileStoreNode)
+				};
 
 			return fileStoreDetails;
 		}

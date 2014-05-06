@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
-	public class FsaStoreArchiverTests : DebugAssertMockedTestClass
+	public class FsaStoreArchiverTests : DebugAssertMockedTestFixture
 	{
 		private Mock<IFsaConfigurationManager> _configurationManagerMock;
 		private Mock<IFsaLogger> _fsaLoggerMock;

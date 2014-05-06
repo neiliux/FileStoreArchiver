@@ -9,7 +9,7 @@ using FSA.Interfaces.DAL;
 namespace FSA.BL
 {
 	/// <summary>
-	/// Provides API for accessing raw configuration data.
+	/// <see cref="IFsaConfigurationDataProvider"/>
 	/// </summary>
 	public class FsaConfigurationDataProvider : IFsaConfigurationDataProvider
 	{

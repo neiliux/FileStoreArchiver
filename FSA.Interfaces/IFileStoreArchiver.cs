@@ -10,8 +10,7 @@ namespace FSA.Interfaces
 		/// <summary>
 		/// Runs the fsa.
 		/// </summary>
-		/// <returns></returns>
-		/// <remarks></remarks>
+		/// <returns>FsaRunResult.</returns>
 		FsaRunResult RunFsa();
 	}
 }

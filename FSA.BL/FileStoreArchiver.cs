@@ -7,13 +7,13 @@ using FSA.Interfaces.BL;
 namespace FSA.BL
 {
 	/// <summary>
-	/// FSA entry point
+	/// FSA entry point.
 	/// </summary>
 	/// <remarks></remarks>
 	public class FileStoreArchiver : IFileStoreArchiver
 	{
 		/// <summary>
-		/// FSA Configuration manager
+		/// FSA Configuration manager.
 		/// </summary>
 		private readonly IFsaConfigurationManager _configurationManager;
 
@@ -28,7 +28,7 @@ namespace FSA.BL
 		private readonly IFsaLogger _fsaLogger;
 
 		/// <summary>
-		/// Privdes management for workers.
+		/// Provides management for workers.
 		/// </summary>
 		private readonly IFsaWorkerProvider _workerProvider;
 

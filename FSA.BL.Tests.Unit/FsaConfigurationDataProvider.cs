@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
-	public class FsaConfigurationDataProvider : DebugAssertMockedTestClass
+	public class FsaConfigurationDataProvider : DebugAssertMockedTestFixture
 	{
 		private IFsaConfigurationDataProvider _dataProvider;
 		private Mock<IFsaConfigurationDal> _fsaConfigurationDalMock;

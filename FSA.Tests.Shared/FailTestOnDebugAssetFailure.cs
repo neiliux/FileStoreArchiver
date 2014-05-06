@@ -18,7 +18,7 @@ namespace FSA.Tests.Shared
 		/// <summary>
 		/// Instance of listener.
 		/// </summary>
-		private static FailTestOnDebugAssetFailure _instance;
+		private static volatile FailTestOnDebugAssetFailure _instance;
 
 		/// <summary>
 		/// Lock object for concurrent requests.
@@ -26,7 +26,18 @@ namespace FSA.Tests.Shared
 		private static readonly object Lock = new object();
 
 		/// <summary>
-		/// Gets the instance.
+		/// Gets or sets a value indicating whether this <see cref="FailTestOnDebugAssetFailure"/> is disabled.
+		/// </summary>
+		/// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
+		/// <remarks></remarks>
+		public static bool Disable
+		{
+			get { return _disable; }
+			set { _disable = value; }
+		}
+
+		/// <summary>
+		/// Gets the static instance of this class.
 		/// </summary>
 		/// <returns></returns>
 		/// <remarks></remarks>
@@ -44,55 +55,49 @@ namespace FSA.Tests.Shared
 					_instance = new FailTestOnDebugAssetFailure();
 				}
 			}
+
+			if (_instance == null)
+			{
+				throw new NullReferenceException("Unable to get instance");
+			}
+
 			return _instance;
 		}
 
+		
 		/// <summary>
-		/// Gets or sets a value indicating whether this <see cref="FailTestOnDebugAssetFailure"/> is disabled.
-		/// </summary>
-		/// <value><c>true</c> if disable; otherwise, <c>false</c>.</value>
-		/// <remarks></remarks>
-		public static bool Disable
-		{
-			get
-			{
-				return _disable;
-			}
-			set
-			{
-				_disable = value;
-			}
-		}
-
-		/// <summary>
-		/// Emits an error message to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+		/// Notifies the testing harness that a failure has occurred, if not disabled.
 		/// </summary>
 		/// <param name="message">A message to emit.</param>
 		/// <remarks></remarks>
 		public override void Fail(string message)
 		{
-			if (!Disable)
+			if (Disable)
 			{
-				NUnit.Framework.Assert.Fail(message);
+				return;
 			}
+			
+			NUnit.Framework.Assert.Fail(message);
 		}
 
 		/// <summary>
-		/// Emits an error message and a detailed error message to the listener you create when you implement the <see cref="T:System.Diagnostics.TraceListener"/> class.
+		/// Notifies the testing harness that a failure has occurred, if not disabled.
 		/// </summary>
 		/// <param name="message">A message to emit.</param>
 		/// <param name="detailMessage">A detailed message to emit.</param>
 		/// <remarks></remarks>
 		public override void Fail(string message, string detailMessage)
 		{
-			if (!Disable)
+			if (Disable)
 			{
-				NUnit.Framework.Assert.Fail("{0}\n{1}", message, detailMessage);
+				return;
 			}
+
+			NUnit.Framework.Assert.Fail("{0}\n{1}", message, detailMessage);
 		}
 
 		/// <summary>
-		/// When overridden in a derived class, writes the specified message to the listener you create in the derived class.
+		/// Writes a message.
 		/// </summary>
 		/// <param name="message">A message to write.</param>
 		/// <remarks></remarks>
@@ -101,7 +106,7 @@ namespace FSA.Tests.Shared
 		}
 
 		/// <summary>
-		/// When overridden in a derived class, writes a message to the listener you create in the derived class, followed by a line terminator.
+		/// Writes a message.
 		/// </summary>
 		/// <param name="message">A message to write.</param>
 		/// <remarks></remarks>

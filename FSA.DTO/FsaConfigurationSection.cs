@@ -9,13 +9,13 @@ namespace FSA.DTO
 	public class FsaConfigurationSection
 	{
 		/// <summary>
-		/// Gets the attributes.
+		/// Gets configuration attributes.
 		/// </summary>
 		/// <remarks></remarks>
 		public IEnumerable<FsaConfigurationAttribute> Attributes { get; private set; }
 
 		/// <summary>
-		/// Gets the values.
+		/// Gets configuration values.
 		/// </summary>
 		/// <remarks></remarks>
 		public IEnumerable<FsaConfigurationValue> Values { get; private set; }
@@ -26,7 +26,9 @@ namespace FSA.DTO
 		/// <param name="attributes">The attributes.</param>
 		/// <param name="values">The values.</param>
 		/// <remarks></remarks>
-		public FsaConfigurationSection(IEnumerable<FsaConfigurationAttribute> attributes, IEnumerable<FsaConfigurationValue> values)
+		public FsaConfigurationSection(
+			IEnumerable<FsaConfigurationAttribute> attributes,
+			IEnumerable<FsaConfigurationValue> values)
 		{
 			Attributes = attributes;
 			Values = values;

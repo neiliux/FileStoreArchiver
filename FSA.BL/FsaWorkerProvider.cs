@@ -25,17 +25,19 @@ namespace FSA.BL
 		public void RegisterWorker(IFsaWorker worker)
 		{
 			Debug.Assert(worker != null);
-			if (!_workers.Contains(worker))
+			if (_workers.Contains(worker))
 			{
-				// If an existing worker is already registered with the defined method,
-				// lets override it.
-				var existingWorker = _workers.SingleOrDefault(w => w.Method == worker.Method);
-				if (existingWorker != null)
-				{
-					_workers.Remove(existingWorker);
-				}
-				_workers.Add(worker);
+				return;
 			}
+
+			// If an existing worker is already registered with the defined method,
+			// lets override it.
+			var existingWorker = _workers.SingleOrDefault(w => w.Method == worker.Method);
+			if (existingWorker != null)
+			{
+				_workers.Remove(existingWorker);
+			}
+			_workers.Add(worker);
 		}
 
 		/// <summary>

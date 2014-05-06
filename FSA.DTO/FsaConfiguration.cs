@@ -25,7 +25,9 @@ namespace FSA.DTO
 		/// <param name="emailSummaryDetails">The email summary details.</param>
 		/// <param name="fileStores">The file stores.</param>
 		/// <remarks></remarks>
-		public FsaConfiguration(EmailSummaryDetails emailSummaryDetails, IEnumerable<FileStoreDetails> fileStores)
+		public FsaConfiguration(
+			EmailSummaryDetails emailSummaryDetails,
+			IEnumerable<FileStoreDetails> fileStores)
 		{
 			EmailSummaryDetails = emailSummaryDetails;
 			FileStores = fileStores;

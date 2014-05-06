@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
-	public class FsaWorkerProviderTests : DebugAssertMockedTestClass
+	public class FsaWorkerProviderTests : DebugAssertMockedTestFixture
 	{
 		private IFsaWorkerProvider _fsaWorkerProvider;
 

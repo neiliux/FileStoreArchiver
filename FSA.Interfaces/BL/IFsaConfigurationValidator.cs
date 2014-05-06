@@ -3,13 +3,13 @@
 namespace FSA.Interfaces.BL
 {
 	/// <summary>
-	/// Provides API for validatation of Fsa Configuration data
+	/// Provides API for validation of FSA configuration data
 	/// </summary>
 	/// <remarks></remarks>
 	public interface IFsaConfigurationValidator
 	{
 		/// <summary>
-		/// Validates the configuration.
+		/// Validates a configuration block.
 		/// </summary>
 		/// <param name="configuration">The configuration.</param>
 		/// <remarks></remarks>

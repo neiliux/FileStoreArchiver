@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
-	public class FsaConfigurationValidator : DebugAssertMockedTestClass
+	public class FsaConfigurationValidator : DebugAssertMockedTestFixture
 	{
 		private IFsaConfigurationValidator _fsaConfigurationValidator;
 
@@ -19,7 +19,7 @@ namespace FSA.BL.Tests.Unit
 		}
 
 		[TearDown]
-		public void TestTeardown()
+		public void TestTearDown()
 		{
 			_fsaConfigurationValidator = null;
 		}

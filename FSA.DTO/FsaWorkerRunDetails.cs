@@ -24,7 +24,9 @@
 		/// <param name="configuration">The configuration.</param>
 		/// <param name="fileStoreDetails">The file store details.</param>
 		/// <remarks></remarks>
-		public FsaWorkerRunDetails(FsaConfiguration configuration, FileStoreDetails fileStoreDetails)
+		public FsaWorkerRunDetails(
+			FsaConfiguration configuration,
+			FileStoreDetails fileStoreDetails)
 		{
 			Configuration = configuration;
 			FileStoreDetails = fileStoreDetails;
