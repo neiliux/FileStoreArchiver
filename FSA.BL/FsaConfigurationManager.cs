@@ -13,21 +13,8 @@ namespace FSA.BL
 	/// <remarks></remarks>
 	public class FsaConfigurationManager : IFsaConfigurationManager
 	{
-		/// <summary>
-		/// Configuration data provider.
-		/// </summary>
 		private readonly IFsaConfigurationDataProvider _dataProvider;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FsaConfigurationManager"/> class.
-		/// </summary>
-		/// <remarks>CTOR for release mode.</remarks>
-		public FsaConfigurationManager()
-		{
-			_dataProvider = new FsaConfigurationDataProvider();
-		}
-
-#if DEBUG
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FsaConfigurationManager"/> class.
 		/// </summary>
@@ -37,7 +24,6 @@ namespace FSA.BL
 		{
 			_dataProvider = dataProvider;
 		}
-#endif
 
 		/// <summary>
 		/// Retrieves the FSA configuration.

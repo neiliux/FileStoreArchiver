@@ -6,26 +6,24 @@ using FSA.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
-// ReSharper disable InconsistentNaming
-#if DEBUG
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
+	[Category("Unit")]
 	public class FsaStoreArchiverTests : DebugAssertMockedTestFixture
 	{
 		private Mock<IFsaConfigurationManager> _configurationManagerMock;
 		private Mock<IFsaLogger> _fsaLoggerMock;
 		private Mock<IFsaWorkerProvider> _fsaWorkerProviderMock;
 		private IFileStoreArchiver _fileStoreArchiver;
-		private const string MockPathToConfigurationXml = @"fakePathToConfigFile.xml";
-
+		
 		[SetUp]
 		public void TestSetup()
 		{
 			_configurationManagerMock = new Mock<IFsaConfigurationManager>();
 			_fsaWorkerProviderMock = new Mock<IFsaWorkerProvider>();
 			_fsaLoggerMock = new Mock<IFsaLogger>();
-			_fileStoreArchiver = new FileStoreArchiver(MockPathToConfigurationXml,
+			_fileStoreArchiver = new FileStoreArchiver(
 													_configurationManagerMock.Object,
 													_fsaLoggerMock.Object,
 													_fsaWorkerProviderMock.Object);
@@ -36,7 +34,7 @@ namespace FSA.BL.Tests.Unit
 		public void RunFsa_NoConfigurationManager_DebugAssertFailure()
 		{
 			// Overwrite what we set in the TestInitialize method.
-			_fileStoreArchiver = new FileStoreArchiver(MockPathToConfigurationXml, null, _fsaLoggerMock.Object, _fsaWorkerProviderMock.Object);
+			_fileStoreArchiver = new FileStoreArchiver(null, _fsaLoggerMock.Object, _fsaWorkerProviderMock.Object);
 			_fileStoreArchiver.RunFsa();
 		}
 
@@ -96,5 +94,3 @@ namespace FSA.BL.Tests.Unit
 		}
 	}
 }
-#endif
-// ReSharper restore InconsistentNaming

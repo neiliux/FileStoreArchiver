@@ -12,9 +12,6 @@ namespace FSA.BL
 	/// <remarks></remarks>
 	public class FsaWorkerProvider : IFsaWorkerProvider
 	{
-		/// <summary>
-		/// List of registered workers.
-		/// </summary>
 		private readonly List<IFsaWorker> _workers = new List<IFsaWorker>();
 
 		/// <summary>

@@ -8,22 +8,27 @@ using Moq;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
-#if DEBUG
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
+	[Category("Unit")]
 	public class FsaConfigurationDataProvider : DebugAssertMockedTestFixture
 	{
 		private IFsaConfigurationDataProvider _dataProvider;
 		private Mock<IFsaConfigurationDal> _fsaConfigurationDalMock;
 		private Mock<IFsaConfigurationValidator> _fsaConfigurationValidatorMock;
+		private Mock<IFsaConfigurationFilePathProvider> _fsaConfigurationFilePathProviderMock;
 
 		[SetUp]
 		public void TestSetup()
 		{
 			_fsaConfigurationDalMock = new Mock<IFsaConfigurationDal>();
 			_fsaConfigurationValidatorMock = new Mock<IFsaConfigurationValidator>();
-			_dataProvider = new BL.FsaConfigurationDataProvider(_fsaConfigurationDalMock.Object, _fsaConfigurationValidatorMock.Object);
+			_fsaConfigurationFilePathProviderMock = new Mock<IFsaConfigurationFilePathProvider>();
+			_dataProvider = new BL.FsaConfigurationDataProvider(
+				_fsaConfigurationDalMock.Object,
+				_fsaConfigurationValidatorMock.Object,
+				_fsaConfigurationFilePathProviderMock.Object);
 		}
 
 		[TearDown]
@@ -41,29 +46,19 @@ namespace FSA.BL.Tests.Unit
 
 		[Test]
 		[ExpectedException(typeof(AssertionException))]
-		public void GetConfigurationXml_NullPathInOptions_AssertFailure()
+		public void GetConfigurationXml_NullFilePath_AssertFailure()
 		{
-			FsaConfigurationLoadOptions options = 
-				new FsaConfigurationLoadOptions
-					{
-						PathToConfigXmlFile = null
-					};
-
-			_dataProvider.GetConfigurationXml(options);
+			_fsaConfigurationFilePathProviderMock.Setup(m => m.GetConfigurationFilePath()).Returns((string)null);
+			_dataProvider.GetConfigurationXml(new FsaConfigurationLoadOptions());
 		}
 
 		[Test]
 		public void GetConfigurationXml_ValidOptions_ReturnsConfigurationXml()
 		{
 			_fsaConfigurationDalMock.Setup(dal => dal.GetConfigurationXml(It.IsAny<string>())).Returns(new XDocument());
-
-			FsaConfigurationLoadOptions options =
-				new FsaConfigurationLoadOptions
-					{
-						PathToConfigXmlFile = "fakePath"
-					};
-
-			XDocument configurationXml = _dataProvider.GetConfigurationXml(options);
+			_fsaConfigurationFilePathProviderMock.Setup(m => m.GetConfigurationFilePath()).Returns("fakePath");
+			
+			XDocument configurationXml = _dataProvider.GetConfigurationXml(new FsaConfigurationLoadOptions());
 			Assert.IsNotNull(configurationXml);
 		}
 
@@ -71,14 +66,9 @@ namespace FSA.BL.Tests.Unit
 		public void GetConfigurationXml_ValidOptions_InvokesDalCall()
 		{
 			_fsaConfigurationDalMock.Setup(dal => dal.GetConfigurationXml(It.IsAny<string>())).Returns(new XDocument());
+			_fsaConfigurationFilePathProviderMock.Setup(m => m.GetConfigurationFilePath()).Returns("fakePath");
 
-			FsaConfigurationLoadOptions options =
-				new FsaConfigurationLoadOptions
-				{
-					PathToConfigXmlFile = "fakePath"
-				};
-
-			_dataProvider.GetConfigurationXml(options);
+			_dataProvider.GetConfigurationXml(new FsaConfigurationLoadOptions());
 			_fsaConfigurationDalMock.Verify(dal => dal.GetConfigurationXml(It.IsAny<string>()), Times.Once());
 		}
 
@@ -87,14 +77,9 @@ namespace FSA.BL.Tests.Unit
 		{
 			_fsaConfigurationDalMock.Setup(dal => dal.GetConfigurationXml(It.IsAny<string>())).Returns(new XDocument());
 			_fsaConfigurationValidatorMock.Setup(bl => bl.ValidateConfiguration(It.IsAny<XDocument>()));
+			_fsaConfigurationFilePathProviderMock.Setup(m => m.GetConfigurationFilePath()).Returns("fakePath");
 
-			FsaConfigurationLoadOptions options =
-				new FsaConfigurationLoadOptions
-				{
-					PathToConfigXmlFile = "fakePath"
-				};
-
-			_dataProvider.GetConfigurationXml(options);
+			_dataProvider.GetConfigurationXml(new FsaConfigurationLoadOptions());
 			_fsaConfigurationValidatorMock.Verify(bl => bl.ValidateConfiguration(It.IsAny<XDocument>()), Times.Once());
 		}
 
@@ -104,16 +89,9 @@ namespace FSA.BL.Tests.Unit
 		{
 			_fsaConfigurationDalMock.Setup(dal => dal.GetConfigurationXml(It.IsAny<string>())).Returns(new XDocument());
 			_fsaConfigurationValidatorMock.Setup(bl => bl.ValidateConfiguration(It.IsAny<XDocument>())).Throws<FsaConfigurationXsdException>();
+			_fsaConfigurationFilePathProviderMock.Setup(m => m.GetConfigurationFilePath()).Returns("fakePath");
 
-			FsaConfigurationLoadOptions options =
-				new FsaConfigurationLoadOptions
-				{
-					PathToConfigXmlFile = "fakePath"
-				};
-
-			_dataProvider.GetConfigurationXml(options);
+			_dataProvider.GetConfigurationXml(new FsaConfigurationLoadOptions());
 		}
 	}
 }
-#endif
-// ReSharper restore InconsistentNaming

@@ -46,11 +46,13 @@
   <ItemGroup>
     <Compile Include="FileStoreArchiver.cs" />
     <Compile Include="FsaConfigurationDataProvider.cs" />
+    <Compile Include="FsaConfigurationFilePathProvider.cs" />
     <Compile Include="FsaConfigurationManager.cs" />
     <Compile Include="FsaConfigurationValidator.cs" />
     <Compile Include="FsaConfigurationXsdException.cs" />
     <Compile Include="FsaFileStoreMethodNotSupportedException.cs" />
     <Compile Include="FsaWorkerProvider.cs" />
+    <Compile Include="NinjectMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

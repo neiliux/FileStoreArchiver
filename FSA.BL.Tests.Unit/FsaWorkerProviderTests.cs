@@ -6,10 +6,10 @@ using Moq;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
-#if DEBUG
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
+	[Category("Unit")]
 	public class FsaWorkerProviderTests : DebugAssertMockedTestFixture
 	{
 		private IFsaWorkerProvider _fsaWorkerProvider;
@@ -80,5 +80,3 @@ namespace FSA.BL.Tests.Unit
 		}
 	}
 }
-#endif
-// ReSharper restore InconsistentNaming

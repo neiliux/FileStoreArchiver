@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Xml.Linq;
-using FSA.DAL;
 using FSA.DTO;
 using FSA.Interfaces;
 using FSA.Interfaces.BL;
@@ -13,39 +12,25 @@ namespace FSA.BL
 	/// </summary>
 	public class FsaConfigurationDataProvider : IFsaConfigurationDataProvider
 	{
-		/// <summary>
-		/// DAL provider.
-		/// </summary>
 		private readonly IFsaConfigurationDal _fsaConfigurationDal;
-
-		/// <summary>
-		/// XSD based data validator
-		/// </summary>
 		private readonly IFsaConfigurationValidator _fsaConfigurationValidator;
+		private readonly IFsaConfigurationFilePathProvider _fsaConfigurationFilePathProvider;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FsaConfigurationDataProvider"/> class.
-		/// </summary>
-		/// <remarks></remarks>
-		public FsaConfigurationDataProvider()
-		{
-			_fsaConfigurationDal = new FsaConfigurationDal();
-			_fsaConfigurationValidator = new FsaConfigurationValidator();
-		}	
-
-#if DEBUG
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FsaConfigurationDataProvider"/> class.
+		/// Initializes a new instance of the <see cref="FsaConfigurationDataProvider" /> class.
 		/// </summary>
 		/// <param name="fsaConfigurationDal">The fsa configuration dal.</param>
-		/// <param name="fsaConfigurationValidator">The fsa configuration validator </param>
-		/// <remarks></remarks>
-		public FsaConfigurationDataProvider(IFsaConfigurationDal fsaConfigurationDal, IFsaConfigurationValidator fsaConfigurationValidator)
+		/// <param name="fsaConfigurationValidator">The fsa configuration validator</param>
+		/// <param name="fsaConfigurationFilePathProvider">The fsa configuration file path provider.</param>
+		public FsaConfigurationDataProvider(
+			IFsaConfigurationDal fsaConfigurationDal,
+			IFsaConfigurationValidator fsaConfigurationValidator,
+			IFsaConfigurationFilePathProvider fsaConfigurationFilePathProvider)
 		{
 			_fsaConfigurationDal = fsaConfigurationDal;
 			_fsaConfigurationValidator = fsaConfigurationValidator;
+			_fsaConfigurationFilePathProvider = fsaConfigurationFilePathProvider;
 		}
-#endif
 
 		/// <summary>
 		/// Gets the configuration XML.
@@ -56,9 +41,10 @@ namespace FSA.BL
 		public XDocument GetConfigurationXml(FsaConfigurationLoadOptions options)
 		{
 			Debug.Assert(options != null);
-			Debug.Assert(!string.IsNullOrWhiteSpace(options.PathToConfigXmlFile));
+			string pathToConfigXml = _fsaConfigurationFilePathProvider.GetConfigurationFilePath();
+			Debug.Assert(!string.IsNullOrWhiteSpace(pathToConfigXml));
 
-			XDocument configurationXml = _fsaConfigurationDal.GetConfigurationXml(options.PathToConfigXmlFile);
+			XDocument configurationXml = _fsaConfigurationDal.GetConfigurationXml(pathToConfigXml);
 			_fsaConfigurationValidator.ValidateConfiguration(configurationXml);
 			return configurationXml;
 		}

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using FSA.DTO;
 using FSA.Interfaces;
 using FSA.Interfaces.BL;
+using Ninject;
 
 namespace FSA.BL
 {
@@ -12,59 +13,56 @@ namespace FSA.BL
 	/// <remarks></remarks>
 	public class FileStoreArchiver : IFileStoreArchiver
 	{
-		/// <summary>
-		/// FSA Configuration manager.
-		/// </summary>
 		private readonly IFsaConfigurationManager _configurationManager;
-
-		/// <summary>
-		/// Full path to configuration Xml file.
-		/// </summary>
-		private readonly string _pathToConfigXml;
-
-		/// <summary>
-		/// Logger.
-		/// </summary>
 		private readonly IFsaLogger _fsaLogger;
-
-		/// <summary>
-		/// Provides management for workers.
-		/// </summary>
 		private readonly IFsaWorkerProvider _workerProvider;
+		private static readonly IFileStoreArchiver InstanceRef;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FileStoreArchiver"/> class.
+		/// Provides a singleton instance of this class.
 		/// </summary>
-		/// <param name="pathToConfigXml">The path to config XML.</param>
-		/// <remarks>This CTOR is for release builds.</remarks>
-		public FileStoreArchiver(string pathToConfigXml)
+		/// <value>The instance.</value>
+		/// <exception cref="System.NullReferenceException">Instance of IFileStoreArchiver does not exist</exception>
+		public static IFileStoreArchiver Instance
 		{
-			_pathToConfigXml = pathToConfigXml;
-			_configurationManager = new FsaConfigurationManager();
-			_fsaLogger = new FsaLogger();
-			_workerProvider = new FsaWorkerProvider();			
+			get
+			{
+				if (InstanceRef == null)
+				{
+					throw new NullReferenceException("Instance of IFileStoreArchiver does not exist");
+				}
+				return InstanceRef; 
+			}
 		}
 
-#if DEBUG
+		/// <summary>
+		/// Initializes static members of the <see cref="FileStoreArchiver"/> class.
+		/// </summary>
+		static FileStoreArchiver()
+		{
+			// Resolve the instance here in the static CTOR to guarantee
+			// thread safety.
+			using (IKernel kernel = new StandardKernel(new NinjectMappings()))
+			{
+				InstanceRef = kernel.Get<IFileStoreArchiver>();
+			}
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FileStoreArchiver"/> class.
 		/// </summary>
-		/// <param name="pathToConfigXml">The path to config XML.</param>
 		/// <param name="configurationManager">The configuration manager.</param>
 		/// <param name="logger">The logger.</param>
 		/// <param name="workerProvider">The worker provider.</param>
-		/// <remarks>This CTOR is for debug builds.</remarks>
-		public FileStoreArchiver(string pathToConfigXml,
-								IFsaConfigurationManager configurationManager, 
-								IFsaLogger logger,
-								IFsaWorkerProvider workerProvider)
+		public FileStoreArchiver(
+			IFsaConfigurationManager configurationManager, 
+			IFsaLogger logger,
+			IFsaWorkerProvider workerProvider)
 		{
 			_configurationManager = configurationManager;
-			_pathToConfigXml = pathToConfigXml;
 			_fsaLogger = logger;
 			_workerProvider = workerProvider;
 		}
-#endif
 
 		/// <summary>
 		/// Invoke the FSA run.
@@ -104,7 +102,7 @@ namespace FSA.BL
 		private FsaConfiguration GetConfiguration()
 		{
 			Debug.Assert(_configurationManager != null);
-			var configuration = _configurationManager.GetConfiguration(new FsaConfigurationLoadOptions { PathToConfigXmlFile = _pathToConfigXml });
+			var configuration = _configurationManager.GetConfiguration(new FsaConfigurationLoadOptions());
 			Debug.Assert(configuration != null);
 			return configuration;
 		}

@@ -3,11 +3,10 @@ using FSA.Interfaces.BL;
 using FSA.Tests.Shared;
 using NUnit.Framework;
 
-// ReSharper disable InconsistentNaming
-#if DEBUG
 namespace FSA.BL.Tests.Unit
 {
 	[TestFixture]
+	[Category("Unit")]
 	public class FsaConfigurationValidator : DebugAssertMockedTestFixture
 	{
 		private IFsaConfigurationValidator _fsaConfigurationValidator;
@@ -92,5 +91,3 @@ namespace FSA.BL.Tests.Unit
 		}
 	}
 }
-#endif
-// ReSharper restore InconsistentNaming

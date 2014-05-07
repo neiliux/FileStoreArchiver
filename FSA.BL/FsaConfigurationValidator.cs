@@ -15,9 +15,6 @@ namespace FSA.BL
 	/// <remarks></remarks>
 	public class FsaConfigurationValidator : IFsaConfigurationValidator
 	{
-		/// <summary>
-		/// Location of embedded XSD document.
-		/// </summary>
 		public const string EmbeddedXsdResourceUri = "FSA.BL.FsaConfigurationXsd.xsd";
 
 		/// <summary>
@@ -98,7 +95,6 @@ namespace FSA.BL
 		/// <remarks></remarks>
 		public static XmlSchema GetXsdSchema(string embeddedXsdResourceUri)
 		{
-			//"FSA.BL.FsaConfigurationXsd.xsd"
 			Debug.Assert(!string.IsNullOrWhiteSpace(embeddedXsdResourceUri));
 
 			var assembly = Assembly.GetExecutingAssembly();
